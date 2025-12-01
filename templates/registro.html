@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Registro - OportuniLink{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-card">
+        <h2>Registrarse</h2>
+
+        {% if mensaje %}
+            <div class="flash danger">{{ mensaje }}</div>
+        {% endif %}
+
+    <form method="POST">
+
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="correo">Correo electrónico</label>
+        <input type="email" id="correo" name="correo" required>
+
+        <label for="contraseña">Contraseña</label>
+        <input type="password" id="contraseña" name="contraseña" required>
+
+        <label for="tipo">Tipo de usuario</label>
+        <select id="tipo" name="tipo" required>
+            <option value="">Selecciona tipo de usuario</option>
+            <option value="estudiante">Estudiante</option>
+            <option value="empresa">Empresa</option>
+        </select>
+
+        <div id="campos-dinamicos"></div>
+
+        <button type="submit" class="btn-primary btn-large">Registrarse</button>
+    </form>
+
+    <script>
+        const tipoSelect = document.getElementById('tipo');
+        const camposDinamicos = document.getElementById('campos-dinamicos');
+
+        tipoSelect.addEventListener('change', function() {
+            camposDinamicos.innerHTML = ''; // Limpiar campos anteriores
+
+            if (this.value === 'estudiante') {
+                camposDinamicos.innerHTML = `
+                    <br><label for="n_carrera">Carrera</label>
+                    <input type="text" id="n_carrera" name="n_carrera" required>
+                `;
+            } else if (this.value === 'empresa') {
+                camposDinamicos.innerHTML = `
+                    <br><label for="n_empresa">Nombre empresa</label>
+                    <input type="text" id="n_empresa" name="n_empresa" required>
+                `;
+            }
+        });
+    </script>
+
+
+        <p class="login-footer">
+            ¿Ya tienes cuenta? <a href="{{ url_for('login') }}">Inicia sesión aquí</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Buscar{% endblock %}
+
+{% block content %}
+<div class="container feed-container">
+
+    <!-- Barra de búsqueda -->
+    <div class="buscador">
+        <h1 style="text-align:center; margin: auto; margin-bottom: 10px;">Motor de Búsqueda Aspire</h1>
+        <div class="feed-search">
+            <form method="GET" action="{{ url_for('inicio_estudiante') }}">
+                    <input type="text" name="q" placeholder="Buscar ofertas, tutorías o empresas..." value="{{ request.args.get('q', '') }}">
+                    <button style="background-color: white;" type="submit"><img src="{{ url_for('static', filename='lupa.png') }}" width="30" height="30"></button>
+            </form>
+        </div>
+        <div class="feed-filtros">
+            <a href="{{ url_for('inicio_estudiante', filtro='ofertas') }}" class="btn-filtro btn-oferta">Ofertas</a>
+            <a href="{{ url_for('inicio_estudiante', filtro='tutorias') }}" class="btn-filtro btn-tutoria">Tutorías</a>
+            <a href="{{ url_for('inicio_estudiante', filtro='empresas') }}" class="btn-filtro btn-empresa">Empresas</a>
+            <a href="{{ url_for('inicio_estudiante') }}" class="btn-filtro btn-todas">Todas</a>
+        </div>
+    </div>
+
+    <!-- Feed -->
+    <div class="feed-publicaciones">
+        {% if publicaciones %}
+            {% for item in publicaciones %}
+                <div class="feed-card {% if item.tipo == 'oferta' %}card-oferta{% elif item.tipo == 'tutoria' %}card-tutoria{% else %}card-empresa{% endif %}">
+                    
+                    <table>
+                        <tr>
+                            <td rowspan="4"><h3 class="feed-card-titulo">{% if item.tipo == 'oferta' %}💼 {{ item.titulo }}{% elif item.tipo == 'tutoria' %}📚 {{ item.titulo }}{% else %}🏢 {{ item.nombre_empresa }}{% endif %}</h3></td>
+                            <td>{% if item.tipo in ['oferta', 'tutoria'] %}
+                                    <p class="feed-card-desc">{{ item.descripcion }}</p>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                        <div class="feed-card-meta">
+                            {% if item.tipo == 'oferta' %}  
+                                    <td><span>Empresa: <strong>{{ item.nombre_empresa }}</strong></span></td>
+                            </tr>
+                            <tr>
+                                    <td><span>Fecha: {{ item.fecha.strftime('%d/%m/%Y') }}</span></td>
+                            </tr>
+                            {% elif item.tipo == 'tutoria' %}
+                            <tr>
+                                <td><span>Estudiante: <strong>{{ item.nombre_estudiante }}</strong></span></td>
+                            </tr>
+                            <tr>
+                                <td><span>Fecha: {{ item.fecha.strftime('%d/%m/%Y') }}</span></td>
+                            </tr>
+                            {% elif item.tipo == 'empresa' %}
+                            <tr>
+                                <td><span style="margin-left: 100px;">Correo: <strong>{{ item.correo }}</strong></span></td>
+                            </tr>
+                            {% endif %}
+                        </div>
+                    </table>
+                </div>
+            {% endfor %}
+        {% else %}
+            <strong><p style="text-align: center; margin:10px 10px">No hay publicaciones para mostrar.</p></strong>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

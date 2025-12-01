@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="content-section" style="max-width:900px;margin:auto;">
+
+    <h2 class="titulo">Ofertas Publicadas</h2>
+
+    {% for oferta in ofertas %}
+    <div class="oferta-post">
+        <div class="oferta-header">
+            <strong class="empresa-nombre">{{ oferta[1] }}</strong>
+            <span class="fecha">{{ oferta[4] }}</span>
+        </div>
+
+        <h3 class="oferta-titulo">{{ oferta[2] }}</h3>
+
+        <p class="oferta-descripcion">
+            {{ oferta[3] }}
+        </p>
+
+        {% if session['tipo'] == 'empresa' %}
+        <div class="oferta-acciones">
+            <a href="{{ url_for('editar_oferta', id=oferta[0]) }}" class="btn-secondary">Editar</a>
+            <a href="{{ url_for('eliminar_oferta', id=oferta[0]) }}" class="btn-danger">Eliminar</a>
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+</section>
+{% endblock %}

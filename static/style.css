@@ -1,0 +1,1283 @@
+/* ========================
+   RESET Y BASE
+======================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #e1e8f0;
+    color: #333;
+}
+
+
+
+
+
+a { text-decoration: none; }
+
+/* Contenedor general */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+/* ========================
+   HEADER
+======================== */
+header {
+    background-color: white !important; 
+    box-shadow: 0 2px 15px rgba(0,0,0,0.06) !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 999 !important;
+    padding: 12px 0 !important;
+}
+
+.header-container {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0px 10% !important;
+}
+
+/* LOGO */
+.logo {
+    font-size: 1.8rem !important;
+    font-weight: 900 !important;
+    color: #253c56 !important;
+    text-decoration: none !important;
+    margin-right: 40%;
+    margin-left: 0% !important;
+    display: flex;
+    gap: 10px;
+}
+
+/* NAV */
+nav ul{
+    display: flex !important;
+    gap: 15px !important;
+    align-items: center !important;
+    list-style-type: none !important;
+}
+
+nav a {
+    text-decoration: none !important;
+    color: #333 !important;
+    padding: 8px 15px !important;
+    border-radius: 8px !important;
+    font-weight: bold !important;
+    transition: 0.3s ease !important;
+}
+
+/* HOVER GENERAL */
+nav a:hover {
+    color: #0056B3 !important;
+}
+
+/* BOTÓN PRIMARIO */
+header nav a.btn-primary {
+    background-color: #3a5160 !important;   /* ✔ Tu color */
+    color: white !important;         
+}
+
+header nav a.btn-primary:hover {
+    background-color: #4c6170 !important;
+}
+
+/* BOTÓN SECUNDARIO */
+header nav a.btn-secondary {
+    background-color: white !important;     /* ✔ Fondo blanco */
+    color: #253c56 !important;              /* ✔ Texto oscuro */
+    border: 2px solid #253c56 !important;   /* ✔ Borde del mismo color */
+}
+
+header nav a.btn-secondary:hover {
+    background-color: #253c56 !important;   /* ✔ Hover invertido */
+    color: white !important;                /* ✔ Texto blanco */
+}
+
+
+/* ========================
+   FLASH MESSAGES
+======================== */
+.flash-messages {
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+.flash {
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.flash.success { background-color: #d4edda; color: #155724; }
+.flash.danger { background-color: #f8d7da; color: #721c24; }
+.flash.warning { background-color: #fff3cd; color: #856404; }
+.flash.info { background-color: #cce5ff; color: #004085; }
+
+/* ========================
+   HERO / FEATURES (Inicio)
+======================== */
+.hero-section {
+    background: linear-gradient(135deg, #1b406a 0%, #00aaff 100%);
+    color: #fff;
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.hero-section h1 span {
+    color: #ffd700;
+}
+
+.hero-section p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.hero-buttons {
+    display: flex;     
+    justify-content: flex-end;
+    gap: 10px;         
+}
+
+.hero-buttons a {
+    display: inline-block;
+    margin: 10px;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-primary { background-color: #1b406a; }
+
+.btn-secondary { background-color: #fff; color: #1b406a; }
+.btn-secondary:hover { background-color: #f0f0f0; }
+
+.perfil-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.btn-primary.btn-large {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 50px;
+    background-color: #1b406a;
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 15px;
+    transition: 0.3s;
+}
+
+.btn-primary.btn-large:hover {
+    background-color: #005a87;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 50px;
+    background-color: #ffd700;
+    color: #1b406a;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #ffca28;
+}
+
+/* Acciones de perfil */
+.perfil-acciones {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.perfil-acciones h3 {
+    margin-bottom: 20px;
+    color: #1b406a;
+    font-size: 1.8rem;
+}
+
+/* ========================
+   OFERTAS TIPO FACEBOOK
+======================== */
+.oferta-post {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0px 8px 25px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease;
+}
+
+.oferta-post:hover { transform: scale(1.01); }
+
+.oferta-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    color: #444;
+    font-size: 14px;
+}
+
+.empresa-nombre { font-weight: bold; color: #1877f2; }
+
+.fecha { font-size: 12px; color: #999; }
+
+.oferta-titulo {
+    font-size: 20px;
+    margin: 10px 0;
+    color: #1b406a;
+}
+
+.oferta-descripcion {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #333;
+}
+
+.oferta-acciones {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-danger {
+    background: #e53935;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.btn-danger:hover {
+    background: #c62828;
+}
+
+html, body {
+    height: 100%;          /* importante para que el body ocupe toda la pantalla */
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* apilar elementos verticalmente */
+    min-height: 100vh;      /* mínimo 100% de la altura de la ventana */
+}
+
+main {
+    flex: 1;                /* el contenido principal ocupa todo el espacio disponible */
+}
+
+footer {
+    margin-top:20px;
+    text-align: center;
+    padding: 20px 0;
+    background: #1b4269;
+    color: #fff;
+}
+
+
+
+/* ========================
+   Login y Registro
+======================== */
+.form-section {
+    max-width: 450px;
+    margin: 80px auto;
+    background: #fff;
+    padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.form-section h2 {
+    font-size: 2rem;
+    margin-bottom: 25px;
+    color: #1b406a;
+}
+
+.form-section input,
+.form-section select,.form-section textarea,
+textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.form-section input:focus,
+.form-section select:focus,
+.form-section textarea{
+    border-color: #1b406a;
+    outline: none;
+}
+
+.form-section button {
+    width: 100%;
+    padding: 12px;
+    background: #1b406a;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.form-section button:hover {
+    background: #005a87;
+}
+
+.form-section p {
+    margin-top: 15px;
+    font-size: 0.95rem;
+}
+
+.form-section a {
+    color: #ffd700;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.form-section a:hover {
+    text-decoration: underline;
+}
+/* Contenedor login/registro */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    background: #f0f2f5;
+    padding: 20px;
+}
+
+.login-card {
+    background: #ffffff;
+    padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
+
+.login-card h2 {
+    margin-bottom: 25px;
+    color: #1b406a;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.login-card label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.login-card input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.login-card input:focus {
+    border-color: #1b406a;
+    outline: none;
+}
+
+.login-card button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login-card .btn-primary.btn-large {
+    background-color: #1b406a;
+    color: #fff;
+}
+
+.login-card .btn-primary.btn-large:hover {
+    background-color: #005a87;
+}
+
+.login-footer {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+}
+
+.login-footer a {
+    color: #1b406a;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Flash mensajes dentro de card */
+.login-card .flash {
+    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+/* Contenedor general para login y registro */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    background: linear-gradient(135deg, #1b406a 0%, #00aaff 100%);
+    padding: 20px;
+}
+
+/* Tarjeta uniforme para login y registro */
+.form-card {
+    background: #fff;
+    padding: 45px 35px;
+    border-radius: 18px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+}
+
+.form-card h2 {
+    font-size: 28px;
+    color: #1b406a;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+/* Inputs uniformes */
+.form-card input, .form-card select {
+    width: 100%;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-card input:focus, .form-card select:focus {
+    border-color: #1b406a;
+    box-shadow: 0 0 8px rgba(0,123,255,0.3);
+    outline: none;
+}
+
+/* Botones uniformes */
+.form-card button {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    background-color: #1b406a;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.form-card button:hover {
+    background-color: #005a87;
+    transform: translateY(-2px);
+}
+
+/* Footer de link */
+.form-footer {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+}
+
+.form-footer a {
+    color: #1b406a;
+    font-weight: bold;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Flash dentro de card */
+.form-card .flash {
+    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: bold;
+}
+.perfil-panel {
+    position: fixed;
+    top: 0;
+    right: -350px;
+    width: 350px;
+    height: 100%;
+    background: #fff;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.perfil-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.perfil-header h3 {
+    font-size: 18px;
+    color: #1b406a;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+}
+
+.perfil-content h4 {
+    color: #1b406a;
+    margin-bottom: 15px;
+}
+
+.perfil-content #ofertasEstudiante,
+.perfil-content #ofertasEmpresa {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+/* Panel lateral de perfil */
+.perfil-panel {
+    position: fixed;
+    top: 0;
+    right: -350px;
+    width: 350px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.perfil-panel.open {
+    right: 0;
+}
+
+.perfil-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.perfil-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #1b406a;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
+}
+
+.perfil-content h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #1b406a;
+    font-size: 1.1rem;
+}
+
+.perfil-card-panel {
+    background: #f0f2f5;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.perfil-card-panel img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.perfil-card-panel p {
+    margin: 5px 0;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.perfil-card-panel .btn-primary {
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 25px;
+    background-color: #1b406a;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.perfil-card-panel .btn-primary:hover {
+    background-color: #3a5160;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+
+/* --- Perfil Principal --- */
+.perfil-main-container {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Card del perfil */
+.perfil-card {
+    background-color: white;
+    padding: 50px 20px;
+    border-radius: 10px;
+    width: 280px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin: 50px;
+}
+
+.perfil-card img.perfil-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.perfil-card p {
+    color: #555;
+    margin: 5px 0;
+}
+
+.btn-primary {
+    display: inline-block;
+    background-color: #3a5160;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    background-color: #005582;
+}
+
+/* --- Feed tipo Facebook --- */
+.feed-container {
+    flex: 1;
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #ccc;
+    margin-bottom: 15px;
+}
+
+.tab-button {
+    background-color: #f4f6f8;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #0072b1;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin-right: 5px;
+    transition: all 0.3s;
+}
+
+.tab-button.active {
+    background-color: #0072b1;
+    color: white;
+}
+
+.tab-button:hover {
+    background-color: #005582;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Feed Cards */
+.feed-card {
+    background-color: white;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.feed-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.feed-card h4 {
+    margin: 0 0 5px 0;
+    color: #0072b1;
+}
+
+.feed-card p {
+    color: #555;
+    margin: 5px 0;
+}
+
+.feed-card .btn-secondary {
+    display: inline-block;
+    background-color: #00a0dc;
+    color: white;
+    padding: 7px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.feed-card .btn-secondary:hover {
+    background-color: #0072b1;
+}
+
+/* --- Perfil lateral (si lo usas) --- */
+.perfil-panel {
+    position: fixed;
+    top: 60px;
+    right: -350px;
+    width: 300px;
+    background: white;
+    box-shadow: -2px 0 8px rgba(0,0,0,0.2);
+    border-radius: 10px 0 0 10px;
+    transition: right 0.3s;
+    z-index: 1001;
+    padding: 15px;
+}
+
+.perfil-panel.open {
+    right: 0;
+}
+
+.perfil-panel .close-btn {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    float: right;
+    cursor: pointer;
+}
+
+/* --- Mensajes flash --- */
+.flash {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.flash.success { background-color: #d4edda; color: #155724; }
+.flash.error { background-color: #f8d7da; color: #721c24; }
+.flash.info { background-color: #d1ecf1; color: #0c5460; }v
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Contenedor general */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Perfil flotante */
+.perfil-panel {
+    position: fixed;
+    top: 60px;
+    right: -350px;
+    width: 350px;
+    height: calc(100% - 60px);
+    background: #f5f5f5;
+    border-left: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+    transition: 0.4s;
+    z-index: 1000;
+    overflow-y: auto;
+}
+.perfil-panel.open { right: 0; }
+.perfil-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.perfil-header h3 {
+    font-size: 1.3rem;
+    color: #1b406a;
+}
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.perfil-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+.perfil-card-panel h4 {
+    margin: 5px 0;
+}
+.perfil-card-panel p {
+    margin: 3px 0;
+}
+.btn-primary, .btn-secondary {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 5px 0;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+.btn-secondary { background: #e1e1e1; color: #333; }
+.btn-secondary:hover { background: #ccc; }
+
+/* Feed general */
+.feed-container {
+    margin-top: 20px;
+}
+.feed-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.feed-tabs button {
+    padding: 8px 12px;
+    margin-right: 5px;
+    border: none;
+    background: #e1e1e1;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.feed-tabs button.active {
+    background: #0073b1;
+    color: white;
+}
+.tab-content {
+    display: none;
+}
+.tab-content.active { display: block; }
+.feed-card {
+    display: flex;
+    align-items: flex-start;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 10px;
+    transition: 0.3s;
+}
+.feed-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.feed-card-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+.feed-card-info h4 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+.feed-card-info p {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+.feed-card-info .feed-card-date {
+    font-size: 0.75rem;
+    color: #777;
+}
+/* Contenedor del feed */
+.feed-container {
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+/* Barra de búsqueda */
+/* Contenedor principal de toda la sección del buscador (barra de búsqueda y filtros) */
+.buscador {
+    max-width: 800px; /* Limita el ancho para que no se extienda demasiado */
+    margin: 40px auto; /* Centra el componente y añade margen superior/inferior */
+    padding: 40px 20px; /* Padding horizontal para pantallas pequeñas */
+    background-color: white;
+    border-radius: 10px;
+}
+
+/* Contenedor de la barra de búsqueda (el input y el botón) */
+.feed-search {
+    position: relative; /* Necesario para la sombra y bordes redondeados */
+    display: flex; /* Para alinear el input y el botón horizontalmente */
+    align-items: center; /* Centra verticalmente los elementos */
+    background-color: #ffffff; /* Fondo blanco */
+    border-radius: 12px; /* Bordes redondeados para toda la caja de búsqueda */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra elegante */
+    padding: 8px; /* Pequeño padding interno para que la sombra envuelva bien */
+    margin-bottom: 30px; /* Espacio debajo de la barra de búsqueda y antes de los filtros */
+}
+
+/* El formulario dentro del feed-search */
+.feed-search form {
+    display: flex; /* Asegura que el input y el botón del formulario estén alineados */
+    width: 100%; /* El formulario ocupa todo el ancho del feed-search */
+}
+
+/* Campo de entrada de texto */
+.feed-search input[type="text"] {
+    flex-grow: 1; /* Permite que el input ocupe el espacio disponible */
+    padding: 12px 20px; /* Más padding para un toque profesional */
+    border: none; /* Quitamos el borde para un aspecto más limpio */
+    border-radius: 8px; /* Bordes redondeados internos */
+    font-size: 16px;
+    color: #333;
+    background-color: transparent; /* Fondo transparente para ver el contenedor principal */
+    outline: none; /* Eliminar el outline al enfocar */
+    margin-right: 5px; /* Pequeño espacio entre el input y el botón */
+}
+
+/* Botón de búsqueda (la lupa) */
+.feed-search button[type="submit"] {
+    padding: 12px 18px; /* Ajusta el padding para que coincida con el input */
+    border: none;
+    background-color: #007bff; /* Color de acento azul para el botón */
+    color: white; /* Color del icono de lupa */
+    font-size: 18px; /* Tamaño del icono de lupa */
+    border-radius: 8px; /* Bordes redondeados para el botón */
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    display: flex; /* Para centrar el icono de la lupa si es necesario */
+    align-items: center;
+    justify-content: center;
+}
+
+.feed-search button[type="submit"]:hover {
+    background-color: #0056b3; /* Un azul más oscuro al pasar el mouse */
+    transform: translateY(-1px); /* Efecto sutil al pasar el mouse */
+}
+
+/* Estilos para los filtros */
+.feed-filtros {
+    display: flex;
+    justify-content: center; /* Centra los botones de filtro */
+    gap: 10px; /* Espacio entre los botones de filtro */
+    flex-wrap: wrap; /* Permite que los botones salten de línea en pantallas pequeñas */
+}
+
+.btn-filtro {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 20px; /* Bordes muy redondeados (pastilla) */
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-decoration: none; /* Quita el subrayado de los enlaces */
+    color: #333; /* Color de texto por defecto */
+    background-color: #e9ecef; /* Color de fondo gris suave por defecto */
+}
+
+/* Colores para los filtros activos o principales */
+.btn-filtro.btn-oferta { background-color: #007bff; color: white; } /* Azul */
+.btn-filtro.btn-tutoria { background-color: #28a745; color: white; } /* Verde */
+.btn-filtro.btn-empresa { background-color: #ffc107; color: #333; } /* Amarillo/Naranja */
+.btn-filtro.btn-todas   { background-color: #6c757d; color: white; } /* Gris */
+
+/* Efecto hover general para todos los botones de filtro no activos */
+.btn-filtro:not(.btn-oferta):not(.btn-tutoria):not(.btn-empresa):not(.btn-todas):hover {
+    background-color: #dee2e6; /* Un gris más claro al pasar el mouse */
+}
+
+.btn-filtro.active {
+    /* Puedes añadir una clase 'active' para el filtro seleccionado */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+/* Tarjetas del feed */
+.feed-card {
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    padding: 15px;
+    margin-bottom: 20px;
+    transition: transform 0.2s;
+}
+
+.feed-card:hover {
+    transform: translateY(-3px);
+}
+
+/* Títulos y descripciones */
+.feed-card-titulo {
+    font-size: 20px;
+    margin-bottom: 8px;
+    margin-right:10px;
+}
+
+.feed-card-desc {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+/* Meta info */
+.feed-card-meta span {
+    margin-right: 15px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Diferentes colores según tipo */
+.card-oferta { border-left: 5px solid #007bff; }
+.card-tutoria { border-left: 5px solid #28a745; }
+.card-empresa { border-left: 5px solid #ffc107; }
+
+
+/*---------------------------------------*/
+
+.hero-section {
+    width: 100%;
+    height: 500px;
+    background-image: url("index_img.jpg");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+/* Capa oscura encima de la imagen */
+.hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.35); /* oscurecimiento leve */
+    backdrop-filter: blur(3px);      /* efecto blur */
+}
+
+/* Texto encima */
+.hero-container {
+    position: absolute;
+    z-index: 2;
+    color: white;
+    top: 50%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    text-align: left;
+}
+
+/*---------------------------------------------------------------------------------------------------------------------------*/
+
+.how-it-works{
+    padding: 60px 10%;
+    text-align: left;
+}
+
+.how-it-works h2{
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #31465b;
+}
+
+.steps,.card-container,.cards {
+    display: flex;
+    gap: 30px;
+}
+
+.step, .card {
+    flex: 1;
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.06);
+    transition: 0.3s ease;
+}
+
+.step:hover,.card:hover {
+    transform: translateY(-5px);
+}
+
+.step h3,.card h4 {
+    font-size: 1.3rem;
+    color: #31465b;
+    margin-bottom: 12px;
+}
+
+.step p,.card p {
+    color: #555;
+    line-height: 1.6;
+}
+
+.card-container,.cards{
+    display:flex;
+    padding:10px 10px;
+    margin: 10px 10px;
+}
+
+.features-section {
+    display: flex;
+    gap: 30px;
+    padding: 60px 10%;
+}
+
+.feature-card {
+    flex: 1;
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.06);
+    transition: 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-card h2 {
+    color: #31465b;
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+}
+
+.feature-card p {
+    color: #555;
+    line-height: 1.6;
+}
+
+
+.titulo{
+    text-align:center;
+    margin: 30px;
+}
+
+.cards {
+    display: grid;
+    /* Define 2 columnas con igual ancho (1fr) y un espacio entre ellas (gap) */
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px; /* Ajusta el espacio entre las tarjetas */
+    max-width: 900px; /* O el ancho que desees para el contenedor central */
+    margin: 0 auto; /* Para centrar el contenedor en la página */
+}
+
+
+.imagenest{
+    padding-left:90px !important;
+}
+
+select {
+  appearance: none;
+  width: 100%;
+  padding: 7px 10px;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  background-color: #ffff;
+  font-size: 1em;
+  cursor: pointer;
+  outline: 0; 
+  color: rgba(0, 0, 0, 0.5);
+}

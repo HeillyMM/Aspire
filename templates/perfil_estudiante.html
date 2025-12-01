@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Perfil Estudiante - Aspire{% endblock %}
+
+{% block content %}
+<div class="perfil-main-container">
+    <div class="perfil-card">
+        <img src="{{ url_for('static', filename='default-avatar.png') }}" alt="Foto Perfil" class="perfil-avatar">
+        <h2>{{ perfil[0] }}</h2><br>
+        <p><strong>Correo:</strong> {{ perfil[1] }}</p><br>
+        <p><strong>Carrera:</strong> {{ perfil[2] or 'No definida' }}</p>
+        <a href="{{ url_for('editar_perfil_estudiante') }}" class="btn-primary btn-large">Editar Perfil</a>
+    </div>
+
+    <div class="perfil-acciones">
+        <h3>Acciones rápidas</h3>
+        <div class="cards">
+            <div class="card">
+                <h4>Ofertas de Empleo</h4>
+                <p>Aplica a ofertas publicadas por empresas registradas.</p><br>
+                <a href="{{ url_for('ver_ofertas') }}" class="btn-secondary">Ver Ofertas</a>
+            </div>
+            <div class="card">
+                <h4>Empresas Registradas</h4>
+                <p>Explora y conoce las empresas activas en la plataforma.</p><br>
+                <a href="{{ url_for('ver_empresas') }}" class="btn-secondary">Ver Empresas</a>
+            </div>
+            <div class="card">
+                <h4>Tutorías Disponibles</h4>
+                <p>Conéctate con tutorías y mejora tus conocimientos.</p><br>
+                <a href="{{ url_for('ver_tutorias') }}" class="btn-secondary">Ver Tutorías</a>
+            </div>
+            <div class="card">
+                <h4>Publicar Tutoría</h4>
+                <p>Publica tutorías y conéctate con estudiantes.</p><br>
+                <a href="{{ url_for('agregar_tutoria') }}" class="btn-secondary">Publicar Tutorías</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

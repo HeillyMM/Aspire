@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Editar Tutoría{% endblock %}
+{% block content %}
+<div class="container">
+    <h2>Editar Tutoría</h2>
+    <form method="POST">
+        <label>Título:</label>
+        <input type="text" name="titulo" value="{{ tutoría[0] }}" required>
+        <label>Descripción:</label>
+        <textarea name="descripcion" rows="5" required>{{ tutoría[1] }}</textarea>
+        <button type="submit" class="btn-primary">Actualizar Tutoría</button>
+        <a href="{{ url_for('ver_tutorias') }}" class="btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

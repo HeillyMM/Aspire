@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Inicio - OportuniLink{% endblock %}
+
+{% block content %}
+<div style="background-color: #e1e8f0; padding: 5px 100%"><br></div>
+<section class="hero-section">
+    <div class="hero-container">
+        <h1>CONECTA TU FUTURO UNIVERSITARIO</h1>
+        <p>Conecta estudiantes con empresas y encuentra oportunidades únicas para crecer profesionalmente.</p>
+
+        {% if not session.get('usuario_id') %}
+        <div class="hero-buttons">
+            <a href="{{ url_for('login') }}" class="btn-primary">Iniciar Sesión</a>
+            <a href="{{ url_for('registro') }}" class="btn-secondary">Registrarse</a>
+        </div>
+        {% else %}
+        <div class="bienvenida">
+            <p>Bienvenido, {{ session.get('nombre') }}!</p>
+        </div>
+        <div class="hero-buttons">
+            <a style="background-color: #2f72b3; color:white;" href="{{ url_for('ver_ofertas') }}" class="btn-secondary">Explorar Oportunidades</a>
+            <a style="background-color: #4ab0a2; color:white" href="{{ url_for('ver_tutorias') }}" class="btn-secondary">Buscar Tutorias</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<section style="padding-left: 10%;" class="features-section">
+    <div class="feature-card">
+        <h2>Para Estudiantes</h2><br>
+        <p>Encuentra ofertas de empleo, tutorías y conecta con empresas que buscan tu talento.</p>
+    </div>
+    <div class="feature-card">
+        <h2>Para Empresas</h2><br>
+        <p>Publica ofertas de trabajo y tutorías, encuentra estudiantes capacitados y gestionalos desde un solo lugar.</p>
+    </div>
+</section>
+
+<section style="padding-left: 10%;" class="how-it-works">
+    <h2>Cómo Funciona</h2><br>
+    <div class="steps">
+        <div class="step">
+            <h3>1. Regístrate</h3>
+            <p>Crea tu cuenta como estudiante o empresa para acceder a la plataforma.</p>
+        </div>
+        <div class="step">
+            <h3>2. Completa tu Perfil</h3>
+            <p>Agrega información importante que te ayudará a conectar mejor.</p>
+        </div>
+        <div class="step">
+            <h3>3. Publica o Aplica</h3>
+            <p>Empresas publican ofertas y tutorías, estudiantes aplican o contactan directamente.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

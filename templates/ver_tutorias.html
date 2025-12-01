@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Mis Tutorías{% endblock %}
+{% block content %}
+<div class="container">
+    <h2 class="titulo">Mis Tutorías</h2>
+    {% if tutorias %}
+    <div class="oferta-post">
+            {% for t in tutorias %}
+            <div class="oferta-header">
+                <h3>{{ t[1] }}</h3>
+                <p>{{ t[2] }}</p>
+            </div>
+                <small class="fecha">Publicado: {{ t[3].strftime('%d/%m/%Y %H:%M') }}</small>
+                <div class="oferta-acciones">
+                    <a style="background-color:#1b406a" class="btn-primary" href="{{ url_for('editar_tutoria', id=t[0]) }}">Editar</a>
+                    <a style="background-color:#1b406a" class="btn-primary" href="{{ url_for('eliminar_tutoria', id=t[0]) }}">Eliminar</a>
+                </div>
+            {% endfor %}
+    </div>
+    {% else %}
+        <p>No tienes tutorías publicadas.</p>
+    {% endif %}
+</div>
+{% endblock %}

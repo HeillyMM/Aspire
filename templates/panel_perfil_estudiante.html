@@ -1,0 +1,22 @@
+<div id="perfilPanel" class="perfil-panel">
+    <div class="perfil-header">
+        <h3>Mi Perfil Estudiante</h3>
+        <button onclick="togglePerfilPanel()" class="close-btn">&times;</button>
+    </div>
+    <div class="perfil-content">
+        <div class="perfil-card-panel">
+            <img src="{{ url_for('static', filename='default-avatar.png') }}" alt="Foto Perfil" class="perfil-avatar">
+            <!--<img src="{{ session.get('foto') or url_for('static', filename='images/default-avatar.png') }}" alt="Foto Perfil" class="perfil-avatar">-->
+            <h4>{{ session.get('nombre') }}</h4><br>
+            <p><strong>Correo:</strong> {{ session.get('correo') }}</p>
+            <p><strong>Carrera:</strong> {{ session.get('carrera') or 'No definida' }}</p><br>
+            <a href="{{ url_for('perfil_estudiante') }}" class="btn-primary btn-block">Ver Perfil Completo</a>
+        </div>
+        <div class="perfil-acciones">
+            <h4>Acciones rápidas</h4>
+            <a href="{{ url_for('ver_ofertas') }}" class="btn-secondary btn-block">Ver Ofertas</a>
+            <a href="{{ url_for('ver_tutorias') }}" class="btn-secondary btn-block">Ver Tutorías</a>
+            <a href="{{ url_for('ver_empresas') }}" class="btn-secondary btn-block">Ver Empresas</a>
+        </div>
+    </div>
+</div>

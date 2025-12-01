@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Estudiantes - OportuniLink{% endblock %}
+
+{% block content %}
+<section class="list-section">
+    <h2 class="titulo">Estudiantes Registrados</h2>
+
+    {% if estudiantes %}
+        <div class="card-container">
+            {% for estudiante in estudiantes %}
+            <div class="card">
+                <table>
+                    <tr>
+                    <div class="card-header">
+                        <td><h3>{{ estudiante.nombre }}</h3></td>
+                        <td class="imagenest" rowspan="4"><img src="{{ url_for('static', filename='default-avatar.png') }}" alt="{{ estudiante.nombre }}" class="profile-pic" width="150px" height="150px"></td>
+                    </div>
+                    </tr>
+                    <div class="card-body">
+                    <tr>
+                        <td><p>Correo: {{ estudiante.correo }}</p></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% if estudiante.carrera %}
+                            <p>Carrera: {{ estudiante.carrera }}</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    </div>
+                    <tr>
+                        <div class="card-footer">
+                        <td><a href="{{ url_for('perfil_estudiante', id=estudiante.id) }}" class="btn-primary">Ver Perfil</a></td>
+                        </div>
+                    </tr>
+                </table>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No hay estudiantes registrados aún.</p>
+    {% endif %}
+</section>
+{% endblock %}

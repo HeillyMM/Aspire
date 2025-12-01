@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Empresas - OportuniLink{% endblock %}
+
+{% block content %}
+<section class="list-section">
+    <h2 class="titulo">Empresas Registradas</h2>
+
+    {% if empresas %}
+        <div class="card-container">
+            {% for empresa in empresas %}
+            <div class="card">
+                <table>
+                    <tr>
+                    <div class="card-header">
+                        <td><h3>{{ empresa.nombre_empresa }}</h3></td>
+                        <td class="imagenest" rowspan="4"><img src="{{ url_for('static', filename='logo.png') }}" alt="{{ empresa.nombre_empresa }}" class="profile-pic" width="150px" height="150px"></td>
+                    </div>
+                    </tr>
+                    <div class="card-body">
+                    <tr>
+                        <td><p>Nombre de Usuario: {{ empresa.nombre }}</p></td>
+                    </tr>
+                    <tr>
+                        <td><p>Correo: {{ empresa.correo }}</p></td>
+                    </tr>
+                    <tr>
+                        <td>
+                        {% if empresa.descripcion %}
+                            <p>Descripción: {{ empresa.descripcion }}</p>
+                        {% endif %}
+                        </td>
+                    </tr>
+                    </div>
+                    <tr>
+                        <div class="card-footer">
+                        <td> <a style="background-color:#1b406a" href="{{ url_for('perfil_empresa', id=empresa.id) }}" class="btn-primary">Ver Perfil</a></td>
+                        </div>
+                    </tr>
+                </table>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No hay empresas registradas aún.</p>
+    {% endif %}
+</section>
+{% endblock %}

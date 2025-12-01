@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Login - OportuniLink{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-card">
+        <h2>Iniciar Sesión</h2>
+
+        {% if mensaje %}
+            <div class="flash danger">{{ mensaje }}</div>
+        {% endif %}
+
+        <form method="POST">
+            <label for="correo">Correo</label>
+            <input type="email" id="correo" name="correo" placeholder="Correo electrónico" required>
+
+            <label for="contraseña">Contraseña</label>
+            <input type="password" id="contraseña" name="contraseña" placeholder="Contraseña" required>
+
+            <button type="submit" class="btn-primary btn-large">Iniciar Sesión</button>
+        </form>
+
+        <p class="login-footer">
+            ¿No tienes cuenta? <a href="{{ url_for('registro') }}">Regístrate aquí</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

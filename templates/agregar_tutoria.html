@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Agregar Tutoría{% endblock %}
+{% block content %}
+<div class="container">
+    <h2 class="titulo">Agregar Tutoría</h2>
+    <form style="margin:auto;" class="form-section" method="POST">
+        <label>Título:</label><br><br>
+        <input type="text" name="titulo" required>
+        <label>Descripción:</label><br><br>
+        <textarea name="descripcion" rows="6" required></textarea><br><br>
+        <button type="submit" class="btn-primary">Agregar Tutoría</button>
+    </form>
+</div>
+{% endblock %}
