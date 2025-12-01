@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from functools import wraps
 import psycopg2
 from datetime import datetime
+import os
 
 app = Flask(__name__)
 app.secret_key = "clave_super_secreta"  # cámbiala por una segura en producción
@@ -12,23 +13,14 @@ app.secret_key = "clave_super_secreta"  # cámbiala por una segura en producció
 # ----------------------
 
 def conectar_bd():
-    return psycopg2.connect(
-        host="db.prmhxjrvypxqiyqizvyx.supabase.co",
-        database="postgres",
-        user="postgres",          # el rol que creaste con permisos CRUD
-        password="EcH22025",
-        port=5432,
-        options='-c client_encoding=UTF8'
-    )
+    DATABASE_URL = os.getenv("DATABASE_URL")
+    conn = psycopg2.connect(DATABASE_URL)
+    return conn
+
 def conectar_bd_lector():
-    return psycopg2.connect(
-        host="db.prmhxjrvypxqiyqizvyx.supabase.co",
-        database="postgres",
-        user="postgres",          # rol solo lectura
-        password="EcH22025",
-        port=5432,
-        options='-c client_encoding=UTF8'
-    )
+    DATABASE_URL = os.getenv("DATABASE_URL")
+    conn = psycopg2.connect(DATABASE_URL)
+    return conn
 
 # ----------------------
 # Decorador login (único y consistente)
