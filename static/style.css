@@ -1281,3 +1281,161 @@ select {
   outline: 0; 
   color: rgba(0, 0, 0, 0.5);
 }
+
+
+/*----------------------------------------------------------------------------------------*/
+
+/* ===============================
+   📱 RESPONSIVE GENERAL
+=============================== */
+
+/* Tablets */
+@media (max-width: 992px) {
+
+    /* Header */
+    .header-container {
+        padding: 0 5% !important;
+    }
+
+    nav ul {
+        gap: 8px !important;
+    }
+
+    .logo {
+        margin-right: 0 !important;
+    }
+
+    /* Hero */
+    .hero-section h1 {
+        font-size: 2.4rem;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    /* Perfil */
+    .perfil-main-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .perfil-card {
+        width: 90%;
+        margin: 20px 0;
+    }
+
+    .feed-container {
+        width: 100%;
+    }
+}
+
+/* Celulares */
+@media (max-width: 768px) {
+
+    /* Header reorganizado */
+    .header-container {
+        flex-direction: column !important;
+        gap: 10px;
+        padding: 10px 20px !important;
+    }
+
+    nav ul {
+        flex-wrap: wrap !important;
+        justify-content: center;
+    }
+
+    /* Hero */
+    .hero-section {
+        padding: 60px 15px;
+    }
+
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+
+    .hero-section p {
+        font-size: 1rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .hero-buttons a {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Formularios */
+    .form-card,
+    .login-card,
+    .form-section {
+        width: 95%;
+        padding: 25px 20px;
+    }
+
+    /* Perfil lateral */
+    .perfil-panel {
+        width: 100%;
+        right: -100%;
+    }
+
+    .perfil-panel.open {
+        right: 0;
+    }
+
+    /* Feed tipo Facebook */
+    .oferta-post {
+        padding: 15px;
+    }
+
+    .oferta-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .oferta-acciones {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .oferta-acciones a {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Celulares pequeños */
+@media (max-width: 480px) {
+
+    header {
+        padding: 10px 0 !important;
+    }
+
+    nav a {
+        padding: 6px 10px !important;
+        font-size: 0.9rem !important;
+    }
+
+    .hero-section h1 {
+        font-size: 1.7rem;
+    }
+
+    .hero-buttons a {
+        padding: 10px 20px;
+    }
+
+    .perfil-card {
+        width: 100%;
+        padding: 25px 10px;
+    }
+
+    .feed-card {
+        padding: 12px;
+    }
+}
