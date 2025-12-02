@@ -5,8 +5,9 @@
 
     <h2 class="titulo">Ofertas Publicadas</h2>
 
-    {% for oferta in ofertas %}
+    {% if ofertas%}
     <div class="oferta-post">
+    {% for oferta in ofertas %}
         <div class="oferta-header">
             <strong class="empresa-nombre">{{ oferta[1] }}</strong>
             <span class="fecha">{{ oferta[4] }}</span>
@@ -26,6 +27,8 @@
         {% endif %}
     </div>
     {% endfor %}
-
+    {% else %}
+        <p style="text-align: center; margin:10px 10px">No existen Ofertas publicadas.</p>
+    {% endif %}    
 </section>
 {% endblock %}

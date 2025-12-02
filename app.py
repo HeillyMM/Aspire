@@ -13,10 +13,9 @@ app.secret_key = "clave_super_secreta"  # cámbiala por una segura en producció
 # ----------------------
 
 def conectar_bd():
-    DATABASE_URL = os.getenv("DATABASE_URL")
-    conn = psycopg2.connect(DATABASE_URL)
-    return conn
-
+     DATABASE_URL = os.getenv("DATABASE_URL")
+     conn = psycopg2.connect(DATABASE_URL)
+     return conn
 def conectar_bd_lector():
     DATABASE_URL = os.getenv("DATABASE_URL")
     conn = psycopg2.connect(DATABASE_URL)
