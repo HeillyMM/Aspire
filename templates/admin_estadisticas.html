@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="stats-section">
+    <h2>📊 Estadísticas del Sistema</h2>
+
+    <div class="stats-container">
+        <div class="stat-card">
+            <h3>Estudiantes</h3>
+            <p>{{ total_estudiantes }}</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Empresas</h3>
+            <p>{{ total_empresas }}</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Ofertas Publicadas</h3>
+            <p>{{ total_ofertas }}</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Postulaciones</h3>
+            <p>{{ total_postulaciones }}</p>
+        </div>
+    </div>
+</div>
+
+<style>
+.stats-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    text-align: center;
+}
+
+.stats-section h2 {
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: #333;
+}
+
+.stats-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.stat-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    width: 220px;
+    text-align: center;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.15);
+    transition: transform 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.stat-card p {
+    font-size: 32px;
+    font-weight: bold;
+    color: #0077cc;
+}
+</style>
+
+{% endblock %}

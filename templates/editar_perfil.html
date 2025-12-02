@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Perfil Estudiante - Aspire{% endblock %}
+{% block title %}Editar Perfil - Aspire{% endblock %}
 
 {% block content %}
 
@@ -28,6 +28,7 @@
             {% elif tipo == 'empresa' %}
                 <label for="nombre_empresa">Nombre de la Empresa</label>
                 <input type="text" id="nombre_empresa" name="nombre_empresa" value="{{ perfil[2] }}" placeholder="Nombre de la Empresa" required>
+            {% elif tipo == 'admin' %}
             {% endif %}
 
             <button type="submit" class="btn-primary btn-large">Guardar Cambios</button>

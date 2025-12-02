@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Perfil Admin - Aspire{% endblock %}
+
+{% block content %}
+<div class="perfil-main-container">
+    <div class="perfil-card">
+        <img src="{{ url_for('static', filename='default-avatar.png') }}" alt="Foto Perfil" class="perfil-avatar">
+        <h2>{{ perfil[0] }}</h2><br>
+        <p><strong>Correo:</strong> {{ perfil[1] }}</p><br>
+        <a href="{{ url_for('editar_perfil_admin') }}" class="btn-primary btn-large">Editar Perfil</a>
+    </div>
+
+
+</div>
+{% endblock %}

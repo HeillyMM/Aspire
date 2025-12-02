@@ -6,7 +6,7 @@
 
     <!-- Barra de búsqueda -->
     <div class="buscador">
-        <h1 style="text-align:center; margin: auto; margin-bottom: 10px;">Motor de Búsqueda Aspire</h1>
+        <h1 style="text-align:center; margin: auto; margin-bottom: 10px;">Busca en Aspire</h1>
         <div class="feed-search">
         <form method="GET" action="{{ url_for('inicio_empresa') }}">
             <input type="text" name="q" placeholder="Buscar ofertas, tutorías o empresas..." value="{{ request.args.get('q', '') }}">

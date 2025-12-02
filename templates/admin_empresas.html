@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Empresas - Admin{% endblock %}
+
+{% block content %}
+<section class="list-section">
+    <h2 class="titulo">Empresas Registradas</h2>
+
+    {% if empresas %}
+        <div class="card-container">
+            {% for e in empresas %}
+            <div class="card">
+                <div class="card-header">
+                    <h3>{{ e[1] }}</h3>
+                    <img src="{{ url_for('static', filename='logo.png') }}" alt="{{ e[1] }}" class="profile-pic" width="100px" height="100px">
+                </div>
+
+                <div class="card-body">
+                    <p>Estado: <strong>{{ e[2] }}</strong></p>
+                    {% if e[3] %}
+                        <p>Descripción: {{ e[3] }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="card-footer">
+                    {% if e[2] != 'aprobada' %}
+                        <a href="{{ url_for('aprobar_empresa', id=e[0]) }}" class="btn-primary" style="background-color:green;">Aprobar</a>
+                    {% endif %}
+                    {% if e[2] != 'rechazada' %}
+                        <a href="{{ url_for('rechazar_empresa', id=e[0]) }}" class="btn-primary" style="background-color:red;">Rechazar</a>
+                    {% endif %}
+                    <a href="{{ url_for('perfil_empresa_admin', id=e[0]) }}" class="btn-primary" style="background-color:#1b406a;">Ver Perfil</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p style="text-align: center; margin:10px 10px">No hay empresas registradas aún.</p>
+    {% endif %}
+</section>
+{% endblock %}

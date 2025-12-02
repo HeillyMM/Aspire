@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Panel Administrador{% endblock %}
+
+{% block content %}
+
+<div class="admin-container">
+    
+    <h1 style="text-align:center; margin-bottom: 20px;">Panel de Administración</h1>
+
+    <!-- Tarjetas de acceso rápido -->
+    <div class="admin-cards">
+
+        <a class="admin-card" href="{{ url_for('admin_empresas') }}">
+            <h2>🏢 Empresas</h2>
+            <p>Ver, aprobar y rechazar empresas registradas.</p>
+        </a>
+
+        <a class="admin-card" href="{{ url_for('ver_ofertas') }}">
+            <h2>💼 Ofertas laborales</h2>
+            <p>Revisar ofertas publicadas, ver postulantes.</p>
+        </a>
+
+        <a class="admin-card" href="{{ url_for('admin_estudiantes') }}">
+            <h2>🎓 Estudiantes</h2>
+            <p>Lista completa de estudiantes registrados.</p>
+        </a>
+
+        <a class="admin-card" href="{{ url_for('admin_estadisticas') }}">
+            <h2>📊 Estadísticas</h2>
+            <p>Ver métricas del sistema (postulaciones, empresas, etc).</p>
+        </a>
+
+    </div>
+
+    <!-- Zona inferior opcional -->
+<center>
+
+    <div class="admin-info">
+        <h3>Información del sistema</h3>
+        <p>Bienvenido, administrador <strong>{{ session.nombre }}</strong>.</p>
+        <p>Usa las tarjetas superiores para gestionar el sistema.</p>
+    </div>
+
+</center>
+
+</div>
+
+{% endblock %}

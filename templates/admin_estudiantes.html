@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Estudiantes - Admin{% endblock %}
+
+{% block content %}
+<section class="list-section">
+    <h2 class="titulo">Estudiantes Registrados</h2>
+
+    {% if estudiantes %}
+        <div class="card-container">
+            {% for e in estudiantes %}
+            <div class="card">
+                <div class="card-header">
+                    <h3>{{ e[1] }}</h3>
+                    <img src="{{ url_for('static', filename='default-avatar.png') }}" alt="{{ e[1] }}" class="profile-pic" width="100px" height="100px">
+                </div>
+
+                <div class="card-body">
+                    <p>Correo: {{ e[2] }}</p>
+                    {% if e[3] %}
+                        <p>Carrera: {{ e[3] }}</p>
+                    {% endif %}
+                    {% if e[4] %}
+                        <p>Semestre: {{ e[4] }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="card-footer">
+                    <a href="{{ url_for('perfil_estudiante', id=e[0]) }}" class="btn-primary" style="background-color:#1b406a;">Ver Perfil</a>
+                    <a href="{{ url_for('editar_estudiante', id=e[0]) }}" class="btn-primary" style="background-color:orange;">Editar</a>
+                    <a href="{{ url_for('eliminar_estudiante', id=e[0]) }}" class="btn-primary" style="background-color:red;" onclick="return confirm('¿Seguro que quieres eliminar a {{ e[1] }}?');">Eliminar</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p style="text-align:center; margin:10px 10px">No hay estudiantes registrados aún.</p>
+    {% endif %}
+</section>
+{% endblock %}

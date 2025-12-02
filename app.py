@@ -13,13 +13,23 @@ app.secret_key = "clave_super_secreta"  # cámbiala por una segura en producció
 # ----------------------
 
 def conectar_bd():
-     DATABASE_URL = os.getenv("DATABASE_URL")
-     conn = psycopg2.connect(DATABASE_URL)
-     return conn
+    return psycopg2.connect(
+        host="db.prmhxjrvypxqiyqizvyx.supabase.co",
+        database="postgres",
+        user="postgres",          # el rol que creaste con permisos CRUD
+        password="EcH22025",
+        port=5432,
+        options='-c client_encoding=UTF8'
+    )
 def conectar_bd_lector():
-    DATABASE_URL = os.getenv("DATABASE_URL")
-    conn = psycopg2.connect(DATABASE_URL)
-    return conn
+    return psycopg2.connect(
+        host="db.prmhxjrvypxqiyqizvyx.supabase.co",
+        database="postgres",
+        user="postgres",          # rol solo lectura
+        password="EcH22025",
+        port=5432,
+        options='-c client_encoding=UTF8'
+    )
 
 # ----------------------
 # Decorador login (único y consistente)
@@ -120,46 +130,83 @@ def login():
         if not correo or not contrasena:
             flash("Debes ingresar correo y contraseña", "warning")
             return render_template('login.html')
+
         conn = None
         cursor = None
         try:
             conn = conectar_bd()
             cursor = conn.cursor()
-            cursor.execute("SELECT id, tipo, nombre, correo FROM usuarios WHERE correo=%s AND contrasena=%s", (correo, contrasena))
-            usuario = cursor.fetchone()
-            if usuario:
-                usuario_id, tipo, nombre_db, correo_db = usuario[0], usuario[1], usuario[2], usuario[3]
-                # Guardar datos en session para usarlos en el panel lateral / templates
-                session['usuario_id'] = usuario_id
-                session['tipo'] = tipo
-                session['nombre'] = nombre_db
-                session['correo'] = correo_db
 
-                # cargar datos extra según tipo (empresa -> nombre_empresa ; estudiante -> carrera)
-                if tipo.lower() == 'empresa':
-                    # intentar obtener nombre_empresa
-                    cursor.execute("SELECT nombre_empresa FROM empresas WHERE usuario_id=%s", (usuario_id,))
-                    row = cursor.fetchone()
-                    session['empresa'] = row[0] if row and row[0] else ''
-                    flash("Bienvenido a OportuniLink (Empresa)", "success")
-                    return redirect(url_for('inicio_empresa'))
-                else:
-                    cursor.execute("SELECT carrera FROM estudiantes WHERE usuario_id=%s", (usuario_id,))
-                    row = cursor.fetchone()
-                    session['carrera'] = row[0] if row and row[0] else ''
-                    flash("Bienvenido a OportuniLink (Estudiante)", "success")
-                    return redirect(url_for('inicio_estudiante'))
-            else:
+            # --- 1. Buscar usuario ---
+            cursor.execute("""
+                SELECT id, tipo, nombre, correo
+                FROM usuarios 
+                WHERE correo=%s AND contrasena=%s
+            """, (correo, contrasena))
+            
+            usuario = cursor.fetchone()
+
+            if not usuario:
                 flash("Usuario o contraseña incorrecta", "danger")
                 return render_template('login.html')
+
+            usuario_id, tipo, nombre_db, correo_db = usuario
+
+            # Guardar datos base
+            session['usuario_id'] = usuario_id
+            session['tipo'] = tipo
+            session['nombre'] = nombre_db
+            session['correo'] = correo_db
+
+            # ----------------------------------------------------
+            #   SI ES EMPRESA → verificar estado
+            # ----------------------------------------------------
+            if tipo.lower() == "admin":
+                flash("Bienvenido Administrador", "success")
+                return redirect(url_for('inicio_admin'))
+            elif tipo.lower() == "empresa":
+                cursor.execute("""
+                    SELECT nombre_empresa, estado 
+                    FROM empresas
+                    WHERE usuario_id = %s
+                """, (usuario_id,))
+                row = cursor.fetchone()
+
+                nombre_empresa = row[0] if row else ''
+                estado = row[1] if row else 'pendiente'
+
+                session['empresa'] = nombre_empresa
+
+                # --- VALIDACIÓN IMPORTANTE ---
+                if estado != "aprobada":
+                    flash("Tu empresa aún no ha sido aprobada por un administrador.", "warning")
+                    return redirect(url_for('inicio'))
+
+                flash("Bienvenido a Aspire (Empresa)", "success")
+                return redirect(url_for('inicio_empresa'))
+
+            # ----------------------------------------------------
+            #   SI ES ESTUDIANTE
+            # ----------------------------------------------------
+            else:
+                cursor.execute("""
+                    SELECT carrera 
+                    FROM estudiantes 
+                    WHERE usuario_id=%s
+                """, (usuario_id,))
+                row = cursor.fetchone()
+                session['carrera'] = row[0] if row else ''
+
+                flash("Bienvenido a Aspire (Estudiante)", "success")
+                return redirect(url_for('inicio_estudiante'))
+
         except Exception as e:
             flash(f"Error al iniciar sesión: {e}", "danger")
             return render_template('login.html')
+
         finally:
-            if cursor:
-                cursor.close()
-            if conn:
-                conn.close()
+            if cursor: cursor.close()
+            if conn: conn.close()
 
     return render_template('login.html')
 
@@ -266,6 +313,101 @@ def inicio_estudiante():
         ]
 
     return render_template('inicio_estudiante.html', publicaciones=publicaciones)
+
+# ------------------------------------------------
+
+
+@app.route('/buscar_admin')
+def buscar_admin():
+    if 'usuario_id' not in session or session.get('tipo') != 'admin':
+        # Redirigir si no está logueado o no es estudiante
+        return redirect(url_for('login'))
+
+    # Obtener parámetro de búsqueda y filtro
+    q = request.args.get('q', '').lower()
+    filtro = request.args.get('filtro', '').lower()
+
+    publicaciones = []
+
+    conn = conectar_bd_lector()
+    cursor = conn.cursor()
+
+    # 1️⃣ Obtener ofertas
+    if filtro in ('', 'ofertas'):
+        cursor.execute("""
+            SELECT o.titulo, o.descripcion, o.fecha_creacion, e.nombre_empresa
+            FROM ofertas o
+            JOIN empresas e ON o.id_empresa = e.usuario_id
+            WHERE %s = '' OR o.titulo ILIKE %s OR o.descripcion ILIKE %s
+            ORDER BY o.fecha_creacion DESC
+        """, (q, f"%{q}%", f"%{q}%"))
+        for row in cursor.fetchall():
+            publicaciones.append({
+                'tipo': 'oferta',
+                'titulo': row[0],
+                'descripcion': row[1],
+                'fecha': row[2],
+                'nombre_empresa': row[3]
+            })
+
+    # 2️⃣ Obtener tutorías
+    if filtro in ('', 'tutorias'):
+        cursor.execute("""
+            SELECT t.titulo, t.descripcion, t.fecha_publicacion, u.nombre
+            FROM tutorias t
+            JOIN usuarios u ON t.estudiante_id = u.id
+            WHERE %s = '' OR t.titulo ILIKE %s OR t.descripcion ILIKE %s
+            ORDER BY t.fecha_publicacion DESC
+        """, (q, f"%{q}%", f"%{q}%"))
+        for row in cursor.fetchall():
+            publicaciones.append({
+                'tipo': 'tutoria',
+                'titulo': row[0],
+                'descripcion': row[1],
+                'fecha': row[2],
+                'nombre_estudiante': row[3]
+            })
+
+    # 3️⃣ Obtener empresas
+    if filtro in ('', 'empresas'):
+        cursor.execute("""
+            SELECT e.nombre_empresa, u.correo
+            FROM empresas e
+            JOIN usuarios u ON e.usuario_id = u.id
+            WHERE %s = '' OR e.nombre_empresa ILIKE %s OR u.nombre ILIKE %s
+            ORDER BY e.nombre_empresa
+        """, (q, f"%{q}%", f"%{q}%"))
+        for row in cursor.fetchall():
+            publicaciones.append({
+                'tipo': 'empresa',
+                'nombre_empresa': row[0],
+                'correo': row[1]
+            })
+
+    # Ordenar todas las publicaciones por fecha si tienen fecha
+    publicaciones.sort(key=lambda x: x.get('fecha') or datetime.min, reverse=True)
+
+
+    # Aplicar filtro
+    if filtro in ['ofertas', 'tutorias', 'empresas']:
+        tipo_map = {'ofertas': 'oferta', 'tutorias': 'tutoria', 'empresas': 'empresa'}
+        publicaciones = [p for p in publicaciones if p['tipo'] == tipo_map[filtro]]
+    else:
+        publicaciones = publicaciones
+
+    # Aplicar búsqueda
+    if q:
+        publicaciones = [
+            p for p in publicaciones
+            if (p.get('titulo') and q in p['titulo'].lower()) or
+               (p.get('descripcion') and q in p['descripcion'].lower()) or
+               (p.get('nombre_empresa') and q in p['nombre_empresa'].lower())
+        ]
+
+    return render_template('buscar_admin.html', publicaciones=publicaciones)
+
+
+#-------------------------------------------------
 
 # ----------------------
 # INICIO - Empresa (feed)
@@ -871,6 +1013,306 @@ def eliminar_tutoria(id):
     finally:
         cursor.close()
         conn.close()
+
+
+@app.route('/admin')
+def inicio_admin():
+    if 'usuario_id' not in session or session.get('tipo') != 'admin':
+        return redirect(url_for('login'))
+    return render_template('inicio_admin.html')
+
+# Ver estados de empresas
+
+@app.route('/admin/empresas')
+def admin_empresas():
+    if session.get('tipo') != 'admin':
+        return redirect(url_for('login'))
+
+    conn = conectar_bd()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, nombre_empresa, estado FROM empresas")
+    empresas = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return render_template("admin_empresas.html", empresas=empresas)
+
+# Aprobar empresas
+
+@app.route('/admin/aprobar/<int:id>')
+def aprobar_empresa(id):
+    if session.get('tipo') != 'admin':
+        return redirect(url_for('login'))
+
+    conn = conectar_bd()
+    cursor = conn.cursor()
+    cursor.execute("""
+        UPDATE empresas SET estado='aprobada' 
+        WHERE id=%s
+    """, (id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    flash("Empresa aprobada correctamente", "success")
+    return redirect(url_for('admin_empresas'))
+
+# Rechazar empresa
+
+@app.route('/admin/rechazar/<int:id>')
+def rechazar_empresa(id):
+    if session.get('tipo') != 'admin':
+        return redirect(url_for('login'))
+
+    conn = conectar_bd()
+    cursor = conn.cursor()
+    cursor.execute("""
+        UPDATE empresas SET estado='rechazada' 
+        WHERE id=%s
+    """, (id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    flash("Empresa rechazada", "warning")
+    return redirect(url_for('admin_empresas'))
+
+@app.route('/admin/estudiantes')
+def admin_estudiantes():
+    if 'usuario_id' not in session or session.get('tipo') != 'admin':
+        return redirect(url_for('login'))
+
+    conn = conectar_bd()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT 
+            u.id,
+            u.nombre,
+            u.correo,
+            e.carrera
+        FROM usuarios u
+        JOIN estudiantes e ON u.id = e.usuario_id
+        ORDER BY u.nombre ASC;
+    """)
+
+    estudiantes = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template("admin_estudiantes.html", estudiantes=estudiantes)
+
+
+@app.route('/admin/estadisticas')
+@login_required
+def admin_estadisticas():
+    conn = conectar_bd()
+    cur = conn.cursor()
+
+    # Total de estudiantes
+    cur.execute("SELECT COUNT(*) FROM estudiantes")
+    total_estudiantes = cur.fetchone()[0]
+
+    # Total de empresas
+    cur.execute("SELECT COUNT(*) FROM empresas")
+    total_empresas = cur.fetchone()[0]
+
+    # Total de ofertas
+    cur.execute("SELECT COUNT(*) FROM ofertas")
+    total_ofertas = cur.fetchone()[0]
+
+    # Total de postulaciones (si existe tabla)
+    try:
+        cur.execute("SELECT COUNT(*) FROM postulaciones")
+        total_postulaciones = cur.fetchone()[0]
+    except:
+        total_postulaciones = 0
+
+    cur.close()
+    conn.close()
+
+    return render_template(
+        "admin_estadisticas.html",
+        total_estudiantes=total_estudiantes,
+        total_empresas=total_empresas,
+        total_ofertas=total_ofertas,
+        total_postulaciones=total_postulaciones
+    )
+
+# ----------------------
+# Perfil admin
+# ----------------------
+@app.route('/perfil_admin')
+@login_required
+def perfil_admin():
+    if session.get('tipo') != 'admin':
+        flash("Acceso denegado.", "danger")
+        return redirect(url_for('index'))
+
+    usuario_id = session['usuario_id']
+    conn = conectar_bd_lector()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT nombre, correo
+        FROM usuarios
+        WHERE id = %s
+    """, (usuario_id,))
+    perfil = cursor.fetchone()
+    cursor.close()
+    conn.close()
+
+    # Guardamos en sesión para ventana flotante
+    session['nombre'] = perfil[0]
+    session['correo'] = perfil[1]
+
+    return render_template('perfil_admin.html', perfil=perfil)
+
+# ----------------------
+# Editar perfil admin
+# ----------------------
+@app.route('/editar_perfil_admin', methods=['GET','POST'])
+@login_required
+def editar_perfil_admin():
+    if session.get('tipo') != 'admin':
+        flash("Acceso denegado.", "danger")
+        return redirect(url_for('index'))
+
+    usuario_id = session['usuario_id']
+    conn = None
+    cursor = None
+    try:
+        conn = conectar_bd()
+        cursor = conn.cursor()
+
+        if request.method == 'POST':
+            nombre = request.form.get('nombre', '').strip()
+            correo = request.form.get('correo', '').strip()
+
+            if not nombre or not correo:
+                flash("Nombre y correo son obligatorios.", "warning")
+                return redirect(url_for('editar_perfil_admin'))
+
+            cursor.execute("UPDATE usuarios SET nombre=%s, correo=%s WHERE id=%s", (nombre, correo, usuario_id))
+            conn.commit()
+
+            # actualizar session
+            session['nombre'] = nombre
+            session['correo'] = correo
+            flash("Perfil actualizado correctamente.", "success")
+            return redirect(url_for('perfil_admin'))
+
+        # obtener datos para el formulario
+        cursor.execute("SELECT nombre, correo FROM usuarios WHERE id=%s", (usuario_id,))
+        perfil = cursor.fetchone()
+        return render_template('editar_perfil.html', perfil=perfil, tipo='admin')
+
+    except Exception as e:
+        if conn:
+            conn.rollback()
+        flash(f"Error al editar perfil: {e}", "danger")
+        return redirect(url_for('perfil_admin'))
+
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+
+@app.route('/editar_estudiante/<int:id>', methods=['GET', 'POST'])
+def editar_estudiante(id):
+    conn = conectar_bd()
+    cur = conn.cursor()
+
+    # Obtener los datos del estudiante
+    cur.execute("""
+    SELECT e.id, e.carrera, u.nombre, u.correo, u.contrasena, u.tipo 
+    FROM estudiantes e
+    JOIN usuarios u ON e.usuario_id = u.id
+    WHERE e.id = %s
+    """, (id,))
+    estudiante = cur.fetchone()
+
+    if not estudiante:
+        cur.close()
+        conn.close()
+        flash("Estudiante no encontrado.", "error")
+        return redirect(url_for('admin_estudiantes')) 
+
+    if request.method == 'POST':
+        nombre = request.form['nombre'].strip()
+        correo = request.form['correo'].strip()
+        carrera = request.form['carrera'].strip()
+        semestre = request.form['semestre'].strip()
+
+        # Actualizar en la base de datos
+        cur.execute("""
+            UPDATE estudiantes
+            SET nombre=%s, correo=%s, carrera=%s, semestre=%s
+            WHERE id=%s
+        """, (nombre, correo, carrera, semestre, id))
+        conn.commit()
+        cur.close()
+        conn.close()
+
+        flash("Estudiante actualizado correctamente.", "success")
+        return redirect(url_for('admin_estudiantes'))  # Redirige al listado de estudiantes
+
+    cur.close()
+    conn.close()
+
+    # Renderizar el formulario con los datos actuales
+    return render_template('editar_estudiante.html', estudiante=estudiante)
+
+
+@app.route('/eliminar_estudiante/<int:id>', methods=['GET','POST'])
+def eliminar_estudiante(id):
+    conn = conectar_bd()
+    cur = conn.cursor()
+    
+    # Verificar que el estudiante existe
+    cur.execute("SELECT id FROM estudiantes WHERE id=%s", (id,))
+    estudiante = cur.fetchone()
+    if not estudiante:
+        cur.close()
+        conn.close()
+        flash("Estudiante no encontrado.", "error")
+        return redirect(url_for('admin_estudiantes'))
+    
+    # Eliminar estudiante
+    cur.execute("DELETE FROM estudiantes WHERE id=%s", (id,))
+    conn.commit()
+    cur.close()
+    conn.close()
+    
+    flash("Estudiante eliminado correctamente.", "success")
+    return redirect(url_for('admin_estudiantes'))
+
+
+@app.route('/perfil_empresa_admin/<int:id>')
+def perfil_empresa_admin(id):
+    conn = conectar_bd()
+    cur = conn.cursor()
+    
+    # Obtener información de la empresa por su ID
+    cur.execute("""
+        SELECT e.id, u.nombre, u.correo, e.nombre_empresa
+        FROM empresas e
+        JOIN usuarios u ON e.id = u.id
+        WHERE e.id = %s
+    """, (id,))
+    
+    empresa = cur.fetchone()
+    cur.close()
+    conn.close()
+    
+    if not empresa:
+        flash("Empresa no encontrada.", "error")
+        return redirect(url_for('admin_empresas'))  # O donde quieras redirigir
+    
+    # empresa = (id, nombre_usuario, correo, nombre_empresa, descripcion)
+    return render_template('perfil_empresa_admin.html', empresa=empresa)
+
 # Rutas ya presentes anteriormente (agregar/ver/editar/eliminar tutorías)
 # Si no existe la tabla tutorias, las rutas devolverán errores — por eso en tu DB todavía no las uses.
 

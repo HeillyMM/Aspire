@@ -14,13 +14,15 @@
             <a href="{{ url_for('registro') }}" class="btn-secondary">Registrarse</a>
         </div>
         {% else %}
-        <div class="bienvenida">
-            <p>Bienvenido, {{ session.get('nombre') }}!</p>
-        </div>
-        <div class="hero-buttons">
-            <a style="background-color: #2f72b3; color:white;" href="{{ url_for('ver_ofertas') }}" class="btn-secondary">Explorar Oportunidades</a>
-            <a style="background-color: #4ab0a2; color:white" href="{{ url_for('ver_tutorias') }}" class="btn-secondary">Buscar Tutorias</a>
-        </div>
+            {% if session.get('tipo')!='admin'%}
+                <div class="bienvenida">
+                    <p>Bienvenido, {{ session.get('nombre') }}!</p>
+                </div>
+                <div class="hero-buttons">
+                    <a style="background-color: #2f72b3; color:white;" href="{{ url_for('ver_ofertas') }}" class="btn-secondary">Ver Oportunidades</a>
+                    <a style="background-color: #4ab0a2; color:white" href="{{ url_for('ver_tutorias') }}" class="btn-secondary">Ver Tutorias</a>
+                </div>
+                {%endif%}
         {% endif %}
     </div>
 </section>

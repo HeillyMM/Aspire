@@ -1,0 +1,16 @@
+<div id="perfilPanel" class="perfil-panel">
+    <div class="perfil-header">
+        <h3>Perfil Admin</h3>
+        <button onclick="togglePerfilPanel()" class="close-btn">&times;</button>
+    </div>
+    <div class="perfil-content">
+        <div class="perfil-card-panel">
+            <img src="{{ url_for('static', filename='default-avatar.png') }}" alt="Foto Perfil" class="perfil-avatar">
+            <!--<img src="{{ session.get('foto') or url_for('static', filename='images/default-avatar.png') }}" alt="Foto Perfil" class="perfil-avatar">-->
+            <h4>{{ session.get('nombre') }}</h4><br>
+            <p><strong>Correo:</strong> {{ session.get('correo') }}</p>
+            <p><strong>Carrera:</strong> {{ session.get('carrera') or 'No definida' }}</p><br>
+            <a href="{{ url_for('perfil_admin') }}" class="btn-primary btn-block">Ver Perfil Completo</a>
+        </div>
+    </div>
+</div>

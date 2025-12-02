@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Perfil de Empresa{% endblock %}
+
+{% block content %}
+<div class="perfil-container">
+    <h2>{{ empresa[3] }}</h2> <!-- Nombre de la empresa -->
+
+    <div class="perfil-card">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="{{ empresa[3] }}" class="profile-pic" width="150px" height="150px">
+
+        <p><strong>Nombre de Usuario:</strong> {{ empresa[1] }}</p>
+        <p><strong>Correo:</strong> {{ empresa[2] }}</p>
+
+        {% if empresa[4] %}
+        <p><strong>Descripción:</strong> {{ empresa[4] }}</p>
+        {% endif %}
+    </div>
+
+    <a href="{{ url_for('admin_empresas') }}" class="btn-primary" style="margin-top:20px;">Volver</a>
+</div>
+
+<style>
+.perfil-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.perfil-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    width: 350px;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.15);
+    margin-top: 20px;
+}
+
+.perfil-card img {
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.perfil-card p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.btn-primary {
+    display: inline-block;
+    background-color: #1b406a;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #15315a;
+}
+</style>
+{% endblock %}
