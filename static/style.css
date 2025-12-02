@@ -1439,3 +1439,102 @@ select {
         padding: 12px;
     }
 }
+
+
+
+
+/* ===========================
+   RESPONSIVE PARA CELULARES
+=========================== */
+@media (max-width: 768px) {
+
+    /* Header */
+    .header-container {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 20px !important;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 8px !important;
+    }
+
+    .logo {
+        margin-right: 0 !important;
+    }
+
+    /* HERO */
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+
+    .hero-buttons {
+        justify-content: center !important;
+        flex-direction: column;
+    }
+
+    /* PERFIL PRINCIPAL */
+    .perfil-main-container {
+        flex-direction: column;
+        margin-top: 20px;
+    }
+
+    .perfil-card {
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    /* FEED */
+    .feed-container {
+        width: 100% !important;
+    }
+
+    .feed-card,
+    .oferta-post {
+        width: 100% !important;
+        margin: 10px 0 !important;
+        padding: 15px !important;
+    }
+
+    /* OFERTAS */
+    .oferta-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    /* Panel lateral */
+    .perfil-panel {
+        width: 100% !important;
+        right: -100% !important;
+    }
+
+    .perfil-panel.open {
+        right: 0 !important;
+    }
+
+    /* Login / Registro */
+    .form-card, .form-section, .login-card {
+        padding: 25px 20px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+/* Para pantallas muy pequeñas (celulares de 340px) */
+@media (max-width: 420px) {
+
+    .feed-card,
+    .oferta-post {
+        padding: 12px !important;
+    }
+
+    .oferta-titulo {
+        font-size: 18px !important;
+    }
+
+    .oferta-descripcion {
+        font-size: 14px !important;
+    }
+}
