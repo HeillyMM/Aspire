@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}{{ trabajo[1] if trabajo else 'Oferta' }} - Aspire{% endblock %}
+
+{% block content %}
+<div class="container flash-messages">
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="flash {{ category }}">{{ message }}</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+</div>
+
+<main class="form-section">
+    <h2>{{ trabajo[1] }}</h2>
+
+    <div class="card perfil-card" style="max-width:800px; margin:20px auto; padding:20px;">
+        <div style="display:flex; flex-direction: column; gap:20px;">
+            
+            <!-- Información de la oferta -->
+            <div>
+                <p><strong>Empresa:</strong> {{ trabajo[5] }}</p>
+                <p><strong>Publicado:</strong> {{ trabajo[3].strftime('%d/%m/%Y') if trabajo[3] else '' }}</p>
+                <p class="feed-card-desc"><strong>Descripción:</strong> {{ trabajo[2] }}</p>
+            </div>
+
+            <!-- Botones -->
+            <div style="display:flex; flex-direction: column; gap:10px; align-items: flex-start;">
+            {% if session.get('tipo') == 'estudiante' %}
+                {% if not ya_postulado %}
+                    <form method="POST" action="{{ url_for('postular_trabajo', id=trabajo[0]) }}">
+                        <button type="submit" class="btn-primary btn-large">Postularme</button>
+                    </form>
+                {% else %}
+                    <form method="POST" action="{{ url_for('cancelar_postulacion', oferta_id=trabajo[0]) }}">
+                        <button type="submit" class="btn-primary btn-large" style="background-color: gray;">Cancelar Postulación</button>
+                    </form>
+                {% endif %}
+            {% endif %}
+                {% if session.get('tipo') == 'empresa' and session.get('usuario_id') == trabajo[4] %}
+                    <a href="{{ url_for('ver_interesados', trabajo_id=trabajo[0]) }}" class="btn-primary btn-large">Ver interesados</a>
+                {% endif %}
+
+                <div style="text-align:center; margin-top:20px;">
+                    <button onclick="history.back()" class="btn-primary btn-large">Volver</button>
+                </div>
+                </a>
+                </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

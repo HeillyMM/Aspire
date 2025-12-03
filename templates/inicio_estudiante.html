@@ -4,13 +4,12 @@
 {% block content %}
 <div class="container feed-container">
 
-    <!-- Barra de búsqueda -->
     <div class="buscador">
         <h1 style="text-align:center; margin: auto; margin-bottom: 10px;">Busca en Aspire</h1>
         <div class="feed-search">
             <form method="GET" action="{{ url_for('inicio_estudiante') }}">
-                    <input type="text" name="q" placeholder="Buscar ofertas, tutorías o empresas..." value="{{ request.args.get('q', '') }}">
-                    <button style="background-color: white;" type="submit"><img src="{{ url_for('static', filename='lupa.png') }}" width="30" height="30"></button>
+                <input type="text" name="q" placeholder="Buscar ofertas, tutorías o empresas..." value="{{ request.args.get('q', '') }}">
+                <button style="background-color: white;" type="submit"><img src="{{ url_for('static', filename='lupa.png') }}" width="30" height="30"></button>
             </form>
         </div>
         <div class="feed-filtros">
@@ -25,37 +24,59 @@
     <div class="feed-publicaciones">
         {% if publicaciones %}
             {% for item in publicaciones %}
-                <div class="feed-card {% if item.tipo == 'oferta' %}card-oferta{% elif item.tipo == 'tutoria' %}card-tutoria{% else %}card-empresa{% endif %}">
-                    
+                <div class="feed-card {% if item.tipo == 'oferta' %}card-oferta{% elif item.tipo == 'tutoria' %}card-tutoria{% else %}card-empresa{% endif %}">    
+
+                <!--    {% if item.tipo in ['oferta', 'tutoria'] and item.descripcion %}
+                        <p class="feed-card-desc">{{ item.descripcion }}</p>
+                    {% endif %}
+                -->
                     <table>
                         <tr>
-                            <td rowspan="4"><h3 class="feed-card-titulo">{% if item.tipo == 'oferta' %}💼 {{ item.titulo }}{% elif item.tipo == 'tutoria' %}📚 {{ item.titulo }}{% else %}🏢 {{ item.nombre_empresa }}{% endif %}</h3></td>
-                            <td>{% if item.tipo in ['oferta', 'tutoria'] %}
-                                    <p class="feed-card-desc">{{ item.descripcion }}</p>
-                                {% endif %}
+                            <td>
+                            <div class="feed-card-header">
+                                <h3 class="feed-card-titulo">
+                                    {% if item.tipo == 'oferta' %}💼 {{ item.titulo }}
+                                    {% elif item.tipo == 'tutoria' %}📚 {{ item.titulo }}
+                                    {% else %}🏢 {{ item.nombre_empresa }}
+                                    {% endif %}
+                                </h3>
+                            </div>
+                            </td>
+                            <td>
+                                {% if item.tipo == 'oferta' %}
+                                <div>Interesados: {{ item.interesados }}</div>
+                            {% endif %}
                             </td>
                         </tr>
                         <tr>
-                        <div class="feed-card-meta">
-                            {% if item.tipo == 'oferta' %}  
-                                    <td><span>Empresa: <strong>{{ item.nombre_empresa }}</strong></span></td>
-                            </tr>
-                            <tr>
-                                    <td><span>Fecha: {{ item.fecha.strftime('%d/%m/%Y') }}</span></td>
-                            </tr>
-                            {% elif item.tipo == 'tutoria' %}
-                            <tr>
-                                <td><span>Estudiante: <strong>{{ item.nombre_estudiante }}</strong></span></td>
-                            </tr>
-                            <tr>
-                                <td><span>Fecha: {{ item.fecha.strftime('%d/%m/%Y') }}</span></td>
-                            </tr>
-                            {% elif item.tipo == 'empresa' %}
-                            <tr>
-                                <td><span style="margin-left: 100px;">Correo: <strong>{{ item.correo }}</strong></span></td>
-                            </tr>
-                            {% endif %}
-                        </div>
+                            <td>
+                            <div class="feed-card-meta">
+                                {% if item.tipo == 'oferta' %}
+                                    <div><span>Empresa: <strong>{{ item.nombre_empresa }}</strong></span></div></div></td></tr>
+                                    <tr><td><div><span>Fecha: {{ item.fecha.strftime('%d/%m/%Y') if item.fecha else '' }}</span><br></div></td></tr>
+
+                                {% elif item.tipo == 'tutoria' %}
+                                    <div><span>Estudiante: <strong>{{ item.nombre_estudiante }}</strong></span></div></td></tr>
+                                    <tr><td><div><span>Fecha: {{ item.fecha.strftime('%d/%m/%Y') if item.fecha else '' }}</span><br></div></td></tr>
+
+                                {% elif item.tipo == 'empresa' %}
+                                    <div><span>Correo: <strong>{{ item.correo }}</strong></span></div></td></tr>
+                                {% endif %}
+                            </div>
+                        <tr><td></td></tr>
+                        <tr>
+                            <td>
+                            <div class="feed-card-actions" style="margin-top:10px;">
+                                {% if item.tipo == 'oferta' %}
+                                    <a href="{{ url_for('ver_trabajo', id=item.id) }}" class="btn-filtro btn-oferta">Ver más</a>
+                                {% elif item.tipo == 'tutoria' %}
+                                    <a href="{{ url_for('ver_tutoria', id=item.id) }}" class="btn-filtro btn-tutoria">Ver más</a>
+                                {% else %}
+                                    <a href="{{ url_for('perfil_empresa_publica', id=item.id) }}" class="btn-filtro btn-empresa">Ver más</a>
+                                {% endif %}
+                            </div>
+                            </td>
+                        </tr>
                     </table>
                 </div>
             {% endfor %}

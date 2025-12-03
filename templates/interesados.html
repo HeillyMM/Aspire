@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Interesados - Aspire{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width:700px; margin:auto; margin-top:30px;">
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <main class="form-section">
+        <h2 style="text-align:center; margin-bottom:20px;">Interesados ({{ total }})</h2>
+
+        {% if interesados %}
+            <div class="card" style="padding:20px; border-radius:8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                <ul style="list-style:none; padding:0; margin:0;">
+                    {% for i in interesados %}
+                        <li style="padding:10px 0; border-bottom:1px solid #eee;">
+                            <strong>{{ i[1] }}</strong> - {{ i[2] }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <p style="text-align:center; margin-top:20px;">No hay postulaciones todavía.</p>
+        {% endif %}
+
+        <div style="text-align:center; margin-top:20px;">
+            <div style="text-align:center; margin-top:20px;">
+                <button onclick="history.back()" class="btn-primary btn-large">Volver</button>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}

@@ -25,7 +25,7 @@
                 </div>
 
                 <div class="card-footer">
-                    <a href="{{ url_for('perfil_estudiante', id=e[0]) }}" class="btn-primary" style="background-color:#1b406a;">Ver Perfil</a>
+                    <a href="{{ url_for('perfil_estudiante_admin', id=e[0]) }}" class="btn-primary" style="background-color:#1b406a;">Ver Perfil</a>
                     <a href="{{ url_for('editar_estudiante', id=e[0]) }}" class="btn-primary" style="background-color:orange;">Editar</a>
                     <a href="{{ url_for('eliminar_estudiante', id=e[0]) }}" class="btn-primary" style="background-color:red;" onclick="return confirm('¿Seguro que quieres eliminar a {{ e[1] }}?');">Eliminar</a>
                 </div>
@@ -35,5 +35,8 @@
     {% else %}
         <p style="text-align:center; margin:10px 10px">No hay estudiantes registrados aún.</p>
     {% endif %}
+    <div style="text-align:center; margin-top:20px;">
+    <button onclick="history.back()" class="btn-primary btn-large">Volver</button>
+</div>
 </section>
 {% endblock %}

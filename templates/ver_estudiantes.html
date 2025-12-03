@@ -29,11 +29,6 @@
                         </td>
                     </tr>
                     </div>
-                    <tr>
-                        <div class="card-footer">
-                        <td><a href="{{ url_for('perfil_estudiante', id=estudiante.id) }}" class="btn-primary">Ver Perfil</a></td>
-                        </div>
-                    </tr>
                 </table>
             </div>
             {% endfor %}
@@ -41,5 +36,8 @@
     {% else %}
         <p style="text-align: center; margin:10px 10px">No hay estudiantes registrados aún.</p>
     {% endif %}
+    <div style="text-align:center; margin-top:20px;">
+        <button onclick="history.back()" class="btn-primary btn-large">Volver</button>
+    </div>
 </section>
 {% endblock %}

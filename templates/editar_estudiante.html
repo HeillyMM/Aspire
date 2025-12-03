@@ -17,19 +17,21 @@
     <h2>Editar Estudiante</h2>
     <form method="POST" class="form-edit-profile">
         <label for="nombre">Nombre</label>
-        <input type="text" id="nombre" name="nombre" value="{{ estudiante[1] }}" required>
+        <input type="text" id="nombre" name="nombre" value="{{ estudiante[0] }}" required>
 
         <label for="correo">Correo Electrónico</label>
-        <input type="email" id="correo" name="correo" value="{{ estudiante[2] }}" required>
+        <input type="email" id="correo" name="correo" value="{{ estudiante[1] }}" required>
 
         <label for="carrera">Carrera</label>
-        <input type="text" id="carrera" name="carrera" value="{{ estudiante[3] }}" placeholder="Carrera">
+        <input type="text" id="carrera" name="carrera" value="{{ estudiante[2] }}" placeholder="Carrera">
 
-        <label for="semestre">Semestre</label>
-        <input type="text" id="semestre" name="semestre" value="{{ estudiante[4] }}" placeholder="Semestre">
+        <label for="contrasena">Contraseña</label>
+        <input type="text" id="contrasena" name="contrasena" value="{{ estudiante[3] }}" placeholder="Contraseña">
 
         <button type="submit" class="btn-primary btn-large">Guardar Cambios</button>
-        <a href="{{ url_for('admin_estudiantes') }}" class="btn-primary btn-large">Cancelar</a>
+        <div style="text-align:center; margin-top:20px;">
+            <button onclick="history.back()" class="btn-primary btn-large">Cancelar</button>
+        </div>
     </form>
 </main>
 

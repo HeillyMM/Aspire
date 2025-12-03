@@ -31,11 +31,13 @@
                         </td>
                     </tr>
                     </div>
+<!--
                     <tr>
                         <div class="card-footer">
-                        <td> <a style="background-color:#1b406a" href="{{ url_for('perfil_empresa', id=empresa.id) }}" class="btn-primary">Ver Perfil</a></td>
-                        </div>
+                        <td> <a style="background-color:#1b406a" href="{{ url_for('perfil_empresa_publica', id=empresa.id) }}" class="btn-primary">Ver Perfil</a></td>
+                        </div>                        
                     </tr>
+-->                    
                 </table>
             </div>
             {% endfor %}
@@ -43,5 +45,8 @@
     {% else %}
         <p style="text-align: center; margin:10px 10px">No hay empresas registradas aún.</p>
     {% endif %}
+    <div style="text-align:center; margin-top:20px;">
+        <button onclick="history.back()" class="btn-primary btn-large">Volver</button>
+    </div>
 </section>
 {% endblock %}

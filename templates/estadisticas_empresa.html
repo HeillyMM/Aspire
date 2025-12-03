@@ -3,30 +3,21 @@
 {% block content %}
 
 <div class="stats-section">
-    <h2>📊 Estadísticas del Sistema</h2>
+    <h2>📊 Estadísticas de tu Empresa</h2>
 
     <div class="stats-container">
-        <div class="stat-card">
-            <h3>Estudiantes</h3>
-            <p>{{ total_estudiantes }}</p>
-        </div>
-
-        <div class="stat-card">
-            <h3>Empresas</h3>
-            <p>{{ total_empresas }}</p>
-        </div>
-
         <div class="stat-card">
             <h3>Ofertas Publicadas</h3>
             <p>{{ total_ofertas }}</p>
         </div>
 
         <div class="stat-card">
-            <h3>Postulaciones</h3>
+            <h3>Postulaciones Recibidas</h3>
             <p>{{ total_postulaciones }}</p>
         </div>
     </div>
 </div>
+
 <div style="text-align:center; margin-top:20px;">
     <button onclick="history.back()" class="btn-primary btn-large">Volver</button>
 </div>

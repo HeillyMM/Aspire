@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Mis Ofertas{% endblock %}
+
+{% block content %}
+<div class="offers-section">
+    <h2>💼 Mis Ofertas Publicadas</h2>
+
+    {% if ofertas %}
+    <div class="offers-container">
+        {% for oferta in ofertas %}
+        <div class="offer-card">
+            <h3>{{ oferta['titulo'] }}</h3>
+            <p>{{ oferta['descripcion'] }}</p>
+            <p><strong>Fecha de publicación:</strong> {{ oferta['fecha_publicacion'] }}</p>
+            <p><strong>Postulantes:</strong> {{ oferta['total_postulantes'] }}</p>
+            <a href="{{ url_for('ver_interesados', trabajo_id=oferta['id']) }}" style="text-align: center;" class="btn-primary btn-large">Ver Postulantes</a>
+            <a href="{{ url_for('editar_oferta', id=oferta['id']) }}" class="btn-primary btn-large" style="text-align: center;">Editar Oferta</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p style="text-align:center; margin-top:20px;">No has publicado ninguna oferta todavía.</p>
+    {% endif %}
+
+    <div style="text-align:center; margin-top:30px;">
+        <button onclick="history.back()" class="btn-primary btn-large">Volver</button>
+    </div>
+</div>
+
+<style>
+.offers-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px 20px;
+}
+
+.offers-section h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #333;
+    text-align: center;
+}
+
+.offers-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+}
+
+.offer-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 15px;
+    width: 500px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.offer-card h3 {
+    font-size: 20px;
+    color: #253c56;
+    margin-bottom: 5px;
+}
+
+.offer-card p {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.4;
+}
+
+
+.no-offers {
+    text-align: center;
+    font-size: 16px;
+    margin-top: 20px;
+    color: #666;
+}
+
+.back-btn {
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .offers-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .offer-card {
+        width: 90%;
+    }
+}
+</style>
+
+
+{% endblock %}

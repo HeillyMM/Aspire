@@ -28,7 +28,8 @@
                     {% if e[2] != 'rechazada' %}
                         <a href="{{ url_for('rechazar_empresa', id=e[0]) }}" class="btn-primary" style="background-color:red;">Rechazar</a>
                     {% endif %}
-                    <a href="{{ url_for('perfil_empresa_admin', id=e[0]) }}" class="btn-primary" style="background-color:#1b406a;">Ver Perfil</a>
+                        <a href="{{ url_for('perfil_empresa_admin', id=e[0]) }}" class="btn-primary" style="background-color:#1b406a;">Ver Perfil</a>
+                        <a href="{{ url_for('eliminar_empresa', id=e[0]) }}" class="btn-primary" style="background-color:red;" onclick="return confirm('¿Seguro que quieres eliminar a {{ e[1] }}?');">Eliminar Empresa</a>
                 </div>
             </div>
             {% endfor %}
@@ -36,5 +37,9 @@
     {% else %}
         <p style="text-align: center; margin:10px 10px">No hay empresas registradas aún.</p>
     {% endif %}
+
+    <div style="text-align:center; margin-top:20px;">
+    <button onclick="history.back()" class="btn-primary btn-large">Volver</button>
+</div>
 </section>
 {% endblock %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Editar Oferta - Aspire{% endblock %}
+
+{% block content %}
+
+<div class="container flash-messages">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
+
+<main class="form-section">
+    <h2>Editar Oferta</h2>
+
+    <form method="POST" class="form-edit-profile">
+
+        <label for="titulo">Título</label>
+        <input type="text" id="titulo" name="titulo" value="{{ oferta[0] }}" required>
+
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" name="descripcion" rows="5" required>{{ oferta[1] }}</textarea>
+
+        <button type="submit" class="btn-primary btn-large">Actualizar Oferta</button>
+        <div style="text-align:center; margin-top:20px;">
+            <button onclick="history.back()" class="btn-primary btn-large">Cancelar</button>
+        </div>
+    </form>
+</main>
+
+<style>
+.form-section {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.15);
+}
+
+.form-edit-profile label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+.form-edit-profile input,
+.form-edit-profile textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.btn-primary.btn-large {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 50px;
+    background-color: #1b406a;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-primary.btn-large:hover {
+    background-color: #15315a;
+}
+</style>
+
+{% endblock %}

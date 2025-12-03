@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}{{ tutoria[1] if tutoria else 'Tutoría' }} - Aspire{% endblock %}
+
+{% block content %}
+<div class="container flash-messages">
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="flash {{ category }}">{{ message }}</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+</div>
+
+<main class="form-section">
+    <h2>{{ tutoria[1] }}</h2>
+
+    <div class="card perfil-card" style="max-width:800px; margin:20px auto; padding:20px;">
+        <div style="display:flex; flex-direction: column; gap:20px;">
+
+            <div>
+                <p><strong>Estudiante:</strong> {{ estudiante[0] if estudiante else '' }}</p>
+                <p><strong>Correo:</strong> {{ estudiante[1] if estudiante else '' }}</p>
+                <p><strong>Publicado:</strong> {{ tutoria[3].strftime('%d/%m/%Y') if tutoria[3] else '' }}</p>
+                <p class="feed-card-desc"><strong>Descripción:</strong> {{ tutoria[2] }}</p>
+            </div>
+
+
+            <div style="text-align:center; margin-top:20px;">
+                <button onclick="history.back()" class="btn-primary btn-large">Volver</button>
+            </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

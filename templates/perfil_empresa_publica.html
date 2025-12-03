@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}{{ empresa[1] if empresa else 'Empresa' }} - Aspire{% endblock %}
+
+{% block content %}
+<div  style="max-width:900px; margin:auto; margin-top:30px;">
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <main class="form-section">
+        <!-- Información de la empresa -->
+        <div  style="padding:20px; margin-bottom:30px;">
+            <h2 style="text-align:center;">🏢 {{ empresa[1] }}</h2>
+            <p style="text-align:center;"><strong>Correo:</strong> {{ empresa[2] }}</p>
+        </div>
+
+        <h3 style="margin-bottom:15px;">Ofertas publicadas</h3>
+        {% if ofertas %}
+            {% for oferta in ofertas %}
+                <div style="padding:15px; margin-bottom:15px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1);">
+                    <h4>💼 {{ oferta[1] }}</h4>
+                    <p>{{ oferta[2] }}</p>
+                    <p><strong>Publicado:</strong> {{ oferta[3].strftime('%d/%m/%Y') if oferta[3] else '' }}</p><br>
+                    <a href="{{ url_for('ver_trabajo', id=oferta[0]) }}" class="btn-primary btn-large">Ver más</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No hay ofertas publicadas por esta empresa.</p>
+        {% endif %}
+
+        <div style="text-align:center; margin-top:20px;">
+
+    <div style="text-align:center; margin-top:20px;">
+        <button onclick="history.back()" class="btn-primary btn-large">Volver</button>
+    </div>
+
+        </div>
+    </main>
+</div>
+{% endblock %}
