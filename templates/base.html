@@ -17,8 +17,8 @@
             </div>
             <nav>
                 <ul>
-                    {% if session.get('usuario_id') %}
-                        <li><a href="{% if session.get('tipo') == 'empresa' %}{{ url_for('inicio_estudiante') }}{% elif session.get('tipo') == 'estudiante' %}{{ url_for('inicio_estudiante') }}{% elif session.get('tipo') == 'admin' %}{{ url_for('buscar_admin') }}{% endif %}">Buscar</a></li>
+                    {% if session.get('usuario_id') and session.get('tipo') != 'admin' %}
+                        <li><a href="{% if session.get('tipo') == 'empresa' %}{{ url_for('inicio_estudiante') }}{% elif session.get('tipo') == 'estudiante' %}{{ url_for('inicio_estudiante') }}{% endif %}">Buscar</a></li>
                         {% if session.get('tipo') == 'empresa'%}
                         {% elif  session.get('estado') == 'aprobada' %}
                             <li><a href="{{ url_for('ver_estudiantes') }}">Estudiantes</a></li>
