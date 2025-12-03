@@ -1,25 +1,98 @@
-<nav>
-    <ul>
-        {% if session.get('usuario_id') %}
-            {% if session.get('tipo') == 'estudiante' or session.get('tipo') == 'empresa' %}
-                <li><a href="{% if session.get('tipo') == 'empresa' %}{{ url_for('inicio_estudiante') }}{% elif session.get('tipo') == 'estudiante' %}{{ url_for('inicio_estudiante') }}{% endif %}">Buscar</a></li>
-            {% endif %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+    <!-- Header / Menú -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='g_cap.jpg') }}" width="30" height="30">
+                <a href="{{ url_for('index') }}" class="logo">Aspire</a>
+            </div>
+            <nav>
+                <ul>
+                    {% if session.get('usuario_id') %}
+                        {% if session.get('tipo') == 'estudiante' or session.get('tipo') == 'empresa' %}
+                            <li><a href="{% if session.get('tipo') == 'empresa' %}{{ url_for('inicio_estudiante') }}{% elif session.get('tipo') == 'estudiante' %}{{ url_for('inicio_estudiante') }}{% endif %}">Buscar</a></li>
+                        {% endif %}
 
-            {% if session.get('tipo') == 'empresa' and session.get('estado') == 'aprobada' %}
-                <li><a href="{{ url_for('ver_estudiantes') }}">Estudiantes</a></li>
-            {% endif %}
+                        {% if session.get('tipo') == 'empresa' and session.get('estado') == 'aprobada' %}
+                            <li><a href="{{ url_for('ver_estudiantes') }}">Estudiantes</a></li>
+                        {% endif %}
 
-            {% if session.get('tipo') == 'admin' %}
-                <li><a href="{{ url_for('inicio_admin') }}">Administrar</a></li>
-            {% elif session.get('tipo') == 'empresa' %}
-                <li><a href="{{ url_for('inicio_empresa') }}">Empresa</a></li>
-            {% endif %}
+                        {% if session.get('tipo') == 'admin' %}
+                            <li><a href="{{ url_for('inicio_admin') }}">Administrar</a></li>
+                        {% elif session.get('tipo') == 'empresa' %}
+                            <li><a href="{{ url_for('inicio_empresa') }}">Empresa</a></li>
+                        {% endif %}
 
-            <li><a href="javascript:void(0);" onclick="togglePerfilPanel()">Mi perfil</a></li>
-            <li><a href="{{ url_for('logout') }}">Cerrar Sesión</a></li>
-        {% else %}
-            <li><a href="{{ url_for('login') }}">Iniciar Sesión</a></li>
-            <li><a href="{{ url_for('registro') }}">Registrarse</a></li>
+                        <li><a href="javascript:void(0);" onclick="togglePerfilPanel()">Mi perfil</a></li>
+                        <li><a href="{{ url_for('logout') }}">Cerrar Sesión</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('login') }}">Iniciar Sesión</a></li>
+                        <li><a href="{{ url_for('registro') }}">Registrarse</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mensajes flash -->
+    <div class="container flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Contenido principal -->
+    <!-- Contenido principal -->
+<main class="main-container">
+    {% block content %}
+    <!-- Aquí se insertará el contenido de cada página -->
+
+    <!-- Botones de navegación generales -->
+    {% if session.get('usuario_id') %}
+    <div class="nav-buttons">
+        <a href="{{ url_for('index') }}" class="btn-secondary">Inicio</a>
+        <a href="javascript:history.back()" class="btn-secondary">Volver</a>
+        <a href="{{ url_for('logout') }}" class="btn-secondary">Cerrar Sesión</a>
+    </div>
+    {% endif %}
+
+    {% endblock %}
+</main>
+
+    <!-- Panel lateral de perfil flotante -->
+    {% if session.get('usuario_id') %}
+        {% if session.get('tipo') == 'estudiante' %}
+            {% include 'panel_perfil_estudiante.html' %}
+        {% elif session.get('tipo') == 'empresa' %}
+            {% include 'panel_perfil_empresa.html' %}
+        {% elif session.get('tipo') == 'admin' %}
+            {% include 'panel_perfil_admin.html' %}        
         {% endif %}
-    </ul>
-</nav>
+    {% endif %}
+
+    <!-- Footer -->
+    <footer>
+        <p>2025 © Aspire. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        function togglePerfilPanel() {
+            const panel = document.getElementById('perfilPanel');
+            panel.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
